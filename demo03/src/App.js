@@ -5,6 +5,14 @@ import logo from './logo.svg';
 import './App.css';
 import Ex01 from './component/Ex01';
 import Ex02 from './component/Ex02';
+import Ex03 from './component/Ex03';
+import Ex03a from './component/Ex03a';
+import Ex04 from './component/Ex04';
+import Ex05 from './component/Ex05';
+import Ex06 from './component/Ex06';
+import Ex06a from './component/Ex06a';
+import Ex07 from './component/Ex07';
+
 
 //모든 컴포넌트(JS) 파일에는 함수가 하나 존재한다
 //-함수가 하나의 화면 조각을 의미한다
@@ -23,7 +31,16 @@ function App() {
     <>
       <h1>리액트 컴포넌트 만들기</h1>
       <Ex01/><hr/>
-      <Ex02/>
+      <Ex02/><hr/>
+      <Ex03/><hr/>
+      <Ex03a/><hr/>
+      <Ex04/><hr/>
+      <Ex05/><hr/>
+      <Ex06/><hr/>
+      <Ex06a/><hr/>
+      <Ex07/><hr/>
+      
+
     </>
   );
 }
