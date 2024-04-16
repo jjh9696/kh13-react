@@ -20,8 +20,9 @@ function Ex07() {
         //- 입력값을 알아야 한다(e.target.value)
         const name = e.target.name;
         //const value = parseInt(e.target.value);
-        const value = e.target.value !== "" ? parseInt(e.target.value) : 0;
-        
+        //const value = e.target.value !== "" ? parseInt(e.target.value) : 0;
+        const value = parseInt(e.target.value || 0);
+
         setScore({
             ...score,//score의 나머지는 유지하세요
             [name] : value //객체의 항목 중 name에 해당하는 항목을 value로 변경
