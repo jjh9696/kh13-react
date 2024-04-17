@@ -14,7 +14,7 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* 리엑트 라우터를 사용하는 역역을 지정 */}
+    {/* 리엑트 라우터를 사용하는 영역을 지정 */}
     <HashRouter>
       <App />
     </HashRouter>

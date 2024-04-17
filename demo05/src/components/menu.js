@@ -19,26 +19,14 @@ function Menu() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarColor02">
                         <ul className="navbar-nav me-auto">
-                            <li className="nav-item">
-                                <a className="nav-link active" href="#">햄버거
-                                    <span className="visually-hidden">(current)</span>
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">배고프다</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Pricing</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">About</a>
-                            </li>
+                            
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">State 예제</a>
                                 <div className="dropdown-menu">
                                     {/* NavLink가 내부적으로 a태그처럼 바뀌기 때문에 className은 그대로 맞춰준다 */}
                                     <NavLink className="dropdown-item" to="/ex01">예제1번</NavLink>
                                     <NavLink className="dropdown-item" to="/ex02">예제2번</NavLink>
+                                    <NavLink className="dropdown-item" to="/ex03">예제2번</NavLink>
                                     {/* <a className="dropdown-item" href="#">예제1번</a>
                                     <a className="dropdown-item" href="#">예제2번</a> */}
                                   
