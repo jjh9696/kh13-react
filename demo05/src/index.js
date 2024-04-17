@@ -3,18 +3,24 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-//기본적으로 제공되는 것 외에 추가할 라이브러리를 불러온다
-//확장자가 없으면 .js
+//bootstrap
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootswatch/dist/sandstone/bootstrap.min.css"
 import './index.css';
 
 import "bootstrap";//js는 경로를 생략해도 기본경로로 선택됨 //index.js가 생략됨
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    {/* 리엑트 라우터를 사용하는 역역을 지정 */}
+    <HashRouter>
+      <App />
+    </HashRouter>
+    {/* <BrowserRouter>
+      <App />
+    </BrowserRouter> */}
   </React.StrictMode>
 );
 
