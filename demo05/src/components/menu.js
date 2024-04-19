@@ -35,6 +35,13 @@ function Menu() {
                                   
                                 </div>
                             </li>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">통합예제</a>
+                                <div className="dropdown-menu">
+                                    <NavLink className="dropdown-item" to="/pocketmon">포켓몬스터</NavLink>
+                                    <NavLink className="dropdown-item" to="/emp">사원</NavLink>
+                                </div>
+                            </li>
                         </ul>
                         <form className="d-flex">
                             <input className="form-control me-sm-2" type="search" placeholder="Search" />
