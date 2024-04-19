@@ -26,7 +26,10 @@ function Menu() {
                                     {/* NavLink가 내부적으로 a태그처럼 바뀌기 때문에 className은 그대로 맞춰준다 */}
                                     <NavLink className="dropdown-item" to="/ex01">예제1번</NavLink>
                                     <NavLink className="dropdown-item" to="/ex02">예제2번</NavLink>
-                                    <NavLink className="dropdown-item" to="/ex03">예제2번</NavLink>
+                                    <NavLink className="dropdown-item" to="/ex03">예제3번</NavLink>
+                                    <NavLink className="dropdown-item" to="/ex04">예제4번</NavLink>
+                                    <NavLink className="dropdown-item" to="/ex04a">예제4a번</NavLink>
+                                    <NavLink className="dropdown-item" to="/ex05">예제5번</NavLink>
                                     {/* <a className="dropdown-item" href="#">예제1번</a>
                                     <a className="dropdown-item" href="#">예제2번</a> */}
                                   

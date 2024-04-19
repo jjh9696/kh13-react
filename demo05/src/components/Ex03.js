@@ -20,12 +20,12 @@ function Ex03() {
         setItems([]);
     }; //e를 만들어서 보관
 
-    const deleteItem = (targer)=> {
+    const deleteItem = (target)=> {
         //items에서 item이 아닌 항목만 검색해서 재설정한다 (삭제효과)
         // const searchitems = item.filter(function(item){
         //     return item.itemNo !== targer.itemNo;
         // });
-        const searchItems = items.filter((item)=>item.No !== EventTarget.itemNo);
+        const searchItems = items.filter((item)=>item.itemNo !== target.itemNo);
 
         setItems(searchItems);//검색 결과로 state를 덮어쓰기
     }
@@ -55,15 +55,21 @@ function Ex03() {
                             </tr>
                         </thead>
                         <tbody className="text-center">
+                            {/* 
+                                map을 이용한 반복을 할 때
+                                생성하는 태그에 제어가 가능한 고유 식별자를 추가(key)
+
+                                안해도 구동은 되지만 지속적인 오류 + 순서 변환 안됨
+                            */}
                             {items.map((item,index)=>(
                                 <tr key={item.itemNo}>
                                     <td>{item.itemNo}</td>
                                     <td>{item.itemName}</td>
                                     <td>{item.itemPrice}원</td>
-                                    <td> 
-                                     <button className="btn btn-danger" onClick={deleteItem}>-</button>
+                                    <td>
+                                        <button className="btn btn-danger"
+                                            onClick={e=>deleteItem(item)}> &minus; </button>
                                     </td>
-                                    
                                 </tr>
                             ))}
                         </tbody>

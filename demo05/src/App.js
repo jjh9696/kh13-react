@@ -6,6 +6,9 @@ import Home from './components/Home';
 import Ex01 from './components/Ex01';
 import Ex02 from './components/Ex02';
 import Ex03 from './components/Ex03';
+import Ex04 from './components/Ex04';
+import Ex04a from './components/Ex04a';
+import Ex05 from './components/Ex05';
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
             <Route path="/ex01" element={<Ex01/>} />
             <Route path="/ex02" element={<Ex02/>} />
             <Route path="/ex03" element={<Ex03/>} />
+            <Route path="/ex04" element={<Ex04/>} />
+            <Route path="/ex04a" element={<Ex04a/>} />
+            <Route path="/ex05" element={<Ex05/>} />
           </Routes>
 
           </div>
