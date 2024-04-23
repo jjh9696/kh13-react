@@ -5,11 +5,11 @@ import { useState } from 'react';
 function Ex03() {
     //state
     const [items, setItems] = useState([
-        {itemNo:1, itemName:"참이슬", itemPrice:1200},
-        {itemNo:2, itemName:"처음처럼", itemPrice:1500},
-        {itemNo:3, itemName:"새로", itemPrice:1700},
-        {itemNo:4, itemName:"좋은데이", itemPrice:1000},
-        {itemNo:5, itemName:"청하", itemPrice:2200}
+        {itemNo:1, itemName:"참이슬", itemPrice:1200, edit:false},
+        {itemNo:2, itemName:"처음처럼", itemPrice:1500, edit:false},
+        {itemNo:3, itemName:"새로", itemPrice:1700, edit:false},
+        {itemNo:4, itemName:"좋은데이", itemPrice:1000, edit:false},
+        {itemNo:5, itemName:"청하", itemPrice:2200, edit:false}
     ]);
 
     //전체 삭제란 비어있는 배열로 state를 덮어쓰기 한다는 것을 의미한다
@@ -62,14 +62,29 @@ function Ex03() {
                                 안해도 구동은 되지만 지속적인 오류 + 순서 변환 안됨
                             */}
                             {items.map((item,index)=>(
+
                                 <tr key={item.itemNo}>
-                                    <td>{item.itemNo}</td>
-                                    <td>{item.itemName}</td>
-                                    <td>{item.itemPrice}원</td>
-                                    <td>
-                                        <button className="btn btn-danger"
-                                            onClick={e=>deleteItem(item)}> &minus; </button>
-                                    </td>
+
+                                {item.edit===true ? (
+                                    <>
+                                        <td>
+                                            <input type="text" value={item.itemNo}/>
+                                        </td>
+                                        <td>입력</td>
+                                        <td>입력</td>
+                                        <td>버튼</td>
+                                    </>
+                                ):(
+                                    <>
+                                        <td>{item.itemNo}</td>
+                                        <td>{item.itemName}</td>
+                                        <td>{item.itemPrice}원</td>
+                                        <td>
+                                            <button className="btn btn-danger"
+                                                onClick={e=>deleteItem(item)}> &minus; </button>
+                                        </td>
+                                    </>
+                                )}
                                 </tr>
                             ))}
                         </tbody>

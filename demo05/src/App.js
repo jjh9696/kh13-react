@@ -6,11 +6,13 @@ import Ex01 from './components/Ex01';
 import Ex02 from './components/Ex02';
 import Ex03 from './components/Ex03';
 import Ex04 from './components/Ex04';
-import Ex04a from './components/Ex04a';
 import Ex05 from './components/Ex05';
 import Pocketmon from './components/integrated/Pocketmon';
-import Emp from './components/integrated/Emp';
-
+import Student from './components/integrated/Student';
+import Menu1 from './components/integrated/Menu1';
+import CountEx from './components/integrated/CountEx';
+import DummyLogin from './components/DummyLogin';
+import RealLogin from './components/RealLogin';
 
 function App() {
   return (
@@ -33,10 +35,13 @@ function App() {
                 <Route path="/ex02" element={<Ex02/>}/>
                 <Route path="/ex03" element={<Ex03/>}/>
                 <Route path="/ex04" element={<Ex04/>}/>
-                <Route path="/ex04a" element={<Ex04a/>}/>
                 <Route path="/ex05" element={<Ex05/>}/>
                 <Route path="/pocketmon" element={<Pocketmon/>}/>
-                <Route path="/emp" element={<Emp/>}/>
+                <Route path="/student" element={<Student/>}/>
+                <Route path="/menu1" element={<Menu1/>}/>
+                <Route path="/count" element={<CountEx/>}/>
+                <Route path="/dummylogin" element={<DummyLogin/>}/>
+                <Route path="/login" element={<RealLogin/>}/>
               </Routes>
 
           </div>
