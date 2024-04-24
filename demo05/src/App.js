@@ -13,11 +13,11 @@ import CountEx from './components/integrated/CountEx';
 import DummyLogin from './components/DummyLogin';
 import RealLogin from './components/RealLogin';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { loginIdState, loginLevelState, isLoginState } from './components/utils/RecoilData';
-import { useCallback, useEffect, useMemo } from 'react';
+import { isLoginState, loginIdState, loginLevelState } from './components/utils/RecoilData';
+import { useCallback, useEffect } from 'react';
 import axios from "./components/utils/CustomAxios";
-import Ex04a from './components/Ex04a';
 import Emp from './components/integrated/Emp';
+import Ex04a from './components/Ex04a';
 
 function App() {
 
@@ -92,5 +92,3 @@ function App() {
 }
 
 export default App;
-
-

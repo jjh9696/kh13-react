@@ -44,6 +44,7 @@ function Menu() {
                                     <NavLink className="dropdown-item" to="/ex02">예제2번</NavLink>
                                     <NavLink className="dropdown-item" to="/ex03">예제3번</NavLink>
                                     <NavLink className="dropdown-item" to="/ex04">예제4번</NavLink>
+                                    <NavLink className="dropdown-item" to="/ex04a">예제4a번</NavLink>
                                     <NavLink className="dropdown-item" to="/ex05">예제5번</NavLink>
                                 </div>
                             </li>
@@ -51,6 +52,7 @@ function Menu() {
                                 <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">통합예제</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/pocketmon">포켓몬스터</NavLink>
+                                    <NavLink className="dropdown-item" to="/emp">사원</NavLink>
                                     {/* 
                                         화면을 조건부로 보여줄 때...
                                         [1] 삼항연산자 - { 조건 ? (참일때화면) : (거짓일때화면) } - <c:choose>와 유사
@@ -97,5 +99,4 @@ function Menu() {
     );
 }
 
-//export
 export default Menu;

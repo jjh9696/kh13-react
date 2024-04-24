@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Jumbotron from '../Jumbotron';
-import axios from "axios";
+// import axios from "axios";
+import axios from "../utils/CustomAxios";
 import { MdDelete } from "react-icons/md";
 import { IoIosSave } from "react-icons/io";
 import { GiCancel } from "react-icons/gi";
@@ -36,7 +37,7 @@ const Emp = () => {
 
     const saveInput = useCallback(() => {
         axios({
-            url: "http://localhost:8080/emp/",
+            url: "/emp/",
             method: "post",
             data: input
         })
@@ -70,7 +71,7 @@ const Emp = () => {
     //목록 불러오기
     const loadData = useCallback(() => {
         axios({
-            url: "http://localhost:8080/emp/",
+            url: "/emp/",
             method: "get"
         })
             .then(resp => {
@@ -84,7 +85,7 @@ const Emp = () => {
         if (choice === false) return;
 
         axios({
-            url: "http://localhost:8080/emp/" + target.empNo,
+            url: "/emp/" + target.empNo,
             //url:"http//localhost:8080/emp/${target.empNo}",
             method: "delete"
         })

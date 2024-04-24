@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Jumbotron from '../Jumbotron';
-import axios from "axios";
+// import axios from "axios";
+import axios from "../utils/CustomAxios";
 import { MdDelete } from "react-icons/md";
 import { IoIosSave } from "react-icons/io";
 import { GiCancel } from "react-icons/gi";
@@ -41,7 +42,7 @@ const Pocketmon = ()=>{
 
     const saveInput = useCallback(()=>{
         axios({
-            url:"http://localhost:8080/pocketmon/",
+            url:"/pocketmon/",
             method:"post",
             data: input
         })
@@ -84,7 +85,7 @@ const Pocketmon = ()=>{
         */
 
         axios({
-            url:"http://localhost:8080/pocketmon/",
+            url:"/pocketmon/",
             method:"get"
         })
         .then(resp=>{
@@ -98,7 +99,7 @@ const Pocketmon = ()=>{
         if(choice === false) return;
 
         axios({
-            url:"http://localhost:8080/pocketmon/"+target.pocketmonNo,
+            url:"/pocketmon/"+target.pocketmonNo,
             //url:`http://localhost:8080/pocketmon/${target.pocketmonNo}`,
             method:"delete"
         })
