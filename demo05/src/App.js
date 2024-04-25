@@ -8,33 +8,34 @@ import LoadingScreen from './LoadingScreen';
 
 //Suspense를 적용하기 위해서는 화면을 Lazy loadin 해야 한다
 // import Home from './components/Home';
-const Home = lazy(()=>import("./components/Home"));
+const Home = lazy(() => import("./components/Home"));
 // import Menu from './components/Menu';
-const Menu = lazy(()=>import("./components/Menu"));
+const Menu = lazy(() => import("./components/Menu"));
 // import Ex01 from './components/Ex01';
-const Ex01 = lazy(()=>import("./components/Ex01"));
+const Ex01 = lazy(() => import("./components/Ex01"));
 // import Ex02 from './components/Ex02';
-const Ex02 = lazy(()=>import("./components/Ex02"));
+const Ex02 = lazy(() => import("./components/Ex02"));
 // import Ex03 from './components/Ex03';
-const Ex03 = lazy(()=>import("./components/Ex03"));
+const Ex03 = lazy(() => import("./components/Ex03"));
 // import Ex04 from './components/Ex04';
-const Ex04 = lazy(()=>import("./components/Ex04"));
+const Ex04 = lazy(() => import("./components/Ex04"));
 // import Ex04a from './components/Ex04a';
-const Ex04a = lazy(()=>import("./components/Ex04a"));
+const Ex04a = lazy(() => import("./components/Ex04a"));
 // import Ex05 from './components/Ex05';
-const Ex05 = lazy(()=>import("./components/Ex05"));
+const Ex05 = lazy(() => import("./components/Ex05"));
 // import Pocketmon from './components/integrated/Pocketmon';
-const Pocketmon = lazy(()=>import("./components/integrated/Pocketmon"));
+const Pocketmon = lazy(() => import("./components/integrated/Pocketmon"));
 // import Student from './components/integrated/Student';
-const Student = lazy(()=>import("./components/integrated/Student"));
+const Student = lazy(() => import("./components/integrated/Student"));
 // import CountEx from './components/integrated/CountEx';
-const CountEx = lazy(()=>import("./components/integrated/CountEx"));
+const CountEx = lazy(() => import("./components/integrated/CountEx"));
 // import DummyLogin from './components/DummyLogin';
-const DummyLogin = lazy(()=>import("./components/DummyLogin"));
+const DummyLogin = lazy(() => import("./components/DummyLogin"));
 // import RealLogin from './components/RealLogin';
-const RealLogin = lazy(()=>import("./components/RealLogin"));
+const RealLogin = lazy(() => import("./components/RealLogin"));
 // import Emp from './components/integrated/Emp';
-const Emp = lazy(()=>import("./components/integrated/Emp"));
+const Emp = lazy(() => import("./components/integrated/Emp"));
+const Book = lazy(() => import("./components/integrated/Book"));
 
 function App() {
 
@@ -82,7 +83,7 @@ function App() {
                 - path를 통해 주소를 설정
                 - element를 통해 연결될 화면을 설정
               */}
-            <Suspense fallback={<LoadingScreen/>}>
+            <Suspense fallback={<LoadingScreen />}>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/ex01" element={<Ex01 />} />
@@ -96,6 +97,7 @@ function App() {
                 <Route path="/count" element={<CountEx />} />
                 <Route path="/dummy" element={<DummyLogin />} />
                 <Route path="/login" element={<RealLogin />} />
+                <Route path="/book" element={<Book />} />
 
                 {isLogin &&
                   <Route path="/student" element={<Student />} />

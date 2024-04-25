@@ -53,6 +53,7 @@ function Menu() {
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/pocketmon">포켓몬스터</NavLink>
                                     <NavLink className="dropdown-item" to="/emp">사원</NavLink>
+                                    <NavLink className="dropdown-item" to="/book">도서(무한스크롤)</NavLink>
                                     {/* 
                                         화면을 조건부로 보여줄 때...
                                         [1] 삼항연산자 - { 조건 ? (참일때화면) : (거짓일때화면) } - <c:choose>와 유사
