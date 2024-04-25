@@ -1,23 +1,40 @@
 import { Route, Routes } from 'react-router';
 import './App.css';
-import Home from './components/Home';
-import Menu from './components/Menu';
-import Ex01 from './components/Ex01';
-import Ex02 from './components/Ex02';
-import Ex03 from './components/Ex03';
-import Ex04 from './components/Ex04';
-import Ex05 from './components/Ex05';
-import Pocketmon from './components/integrated/Pocketmon';
-import Student from './components/integrated/Student';
-import CountEx from './components/integrated/CountEx';
-import DummyLogin from './components/DummyLogin';
-import RealLogin from './components/RealLogin';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoginState, loginIdState, loginLevelState } from './components/utils/RecoilData';
-import { useCallback, useEffect } from 'react';
+import { Suspense, lazy, useCallback, useEffect } from 'react';
 import axios from "./components/utils/CustomAxios";
-import Emp from './components/integrated/Emp';
-import Ex04a from './components/Ex04a';
+import LoadingScreen from './LoadingScreen';
+
+//Suspense를 적용하기 위해서는 화면을 Lazy loadin 해야 한다
+// import Home from './components/Home';
+const Home = lazy(()=>import("./components/Home"));
+// import Menu from './components/Menu';
+const Menu = lazy(()=>import("./components/Menu"));
+// import Ex01 from './components/Ex01';
+const Ex01 = lazy(()=>import("./components/Ex01"));
+// import Ex02 from './components/Ex02';
+const Ex02 = lazy(()=>import("./components/Ex02"));
+// import Ex03 from './components/Ex03';
+const Ex03 = lazy(()=>import("./components/Ex03"));
+// import Ex04 from './components/Ex04';
+const Ex04 = lazy(()=>import("./components/Ex04"));
+// import Ex04a from './components/Ex04a';
+const Ex04a = lazy(()=>import("./components/Ex04a"));
+// import Ex05 from './components/Ex05';
+const Ex05 = lazy(()=>import("./components/Ex05"));
+// import Pocketmon from './components/integrated/Pocketmon';
+const Pocketmon = lazy(()=>import("./components/integrated/Pocketmon"));
+// import Student from './components/integrated/Student';
+const Student = lazy(()=>import("./components/integrated/Student"));
+// import CountEx from './components/integrated/CountEx';
+const CountEx = lazy(()=>import("./components/integrated/CountEx"));
+// import DummyLogin from './components/DummyLogin';
+const DummyLogin = lazy(()=>import("./components/DummyLogin"));
+// import RealLogin from './components/RealLogin';
+const RealLogin = lazy(()=>import("./components/RealLogin"));
+// import Emp from './components/integrated/Emp';
+const Emp = lazy(()=>import("./components/integrated/Emp"));
 
 function App() {
 
@@ -65,24 +82,26 @@ function App() {
                 - path를 통해 주소를 설정
                 - element를 통해 연결될 화면을 설정
               */}
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/ex01" element={<Ex01 />} />
-              <Route path="/ex02" element={<Ex02 />} />
-              <Route path="/ex03" element={<Ex03 />} />
-              <Route path="/ex04" element={<Ex04 />} />
-              <Route path="/ex04a" element={<Ex04a />} />
-              <Route path="/ex05" element={<Ex05 />} />
-              <Route path="/pocketmon" element={<Pocketmon />} />
-              <Route path="/emp" element={<Emp />} />
-              <Route path="/count" element={<CountEx />} />
-              <Route path="/dummy" element={<DummyLogin />} />
-              <Route path="/login" element={<RealLogin />} />
+            <Suspense fallback={<LoadingScreen/>}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/ex01" element={<Ex01 />} />
+                <Route path="/ex02" element={<Ex02 />} />
+                <Route path="/ex03" element={<Ex03 />} />
+                <Route path="/ex04" element={<Ex04 />} />
+                <Route path="/ex04a" element={<Ex04a />} />
+                <Route path="/ex05" element={<Ex05 />} />
+                <Route path="/pocketmon" element={<Pocketmon />} />
+                <Route path="/emp" element={<Emp />} />
+                <Route path="/count" element={<CountEx />} />
+                <Route path="/dummy" element={<DummyLogin />} />
+                <Route path="/login" element={<RealLogin />} />
 
-              {isLogin &&
-                <Route path="/student" element={<Student />} />
-              }
-            </Routes>
+                {isLogin &&
+                  <Route path="/student" element={<Student />} />
+                }
+              </Routes>
+            </Suspense>
 
           </div>
         </div>
