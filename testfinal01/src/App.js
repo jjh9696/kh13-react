@@ -5,6 +5,7 @@ import { isLoginState, loginIdState, loginLevelState } from './components/utils/
 import { Suspense, lazy, useCallback, useEffect } from 'react';
 import axios from "./components/utils/CustomAxios";
 import LoadingScreen from './LoadingScreen';
+import RealLogin from './components/RealLogin';
 
 //Suspense를 적용하기 위해서는 화면을 Lazy loadin 해야 한다
 // import Home from './components/Home';
@@ -13,6 +14,7 @@ const Home = lazy(() => import("./components/Home"));
 const Menu = lazy(() => import("./components/Menu"));
 
 const Chatbot = lazy(() => import("./components/integrated/chatbot"));
+const MemberChat = lazy(() => import("./components/integrated/memberChat"));
 
 function App() {
 
@@ -65,10 +67,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<RealLogin />} />
                 <Route path="/chatbot" element={<Chatbot />} />
-
-                {/* {isLogin &&
-                  <Route path="/student" element={<Student />} />
-                } */}
+                <Route path="/memberChat" element={<MemberChat />} />
               </Routes>
             </Suspense>
 

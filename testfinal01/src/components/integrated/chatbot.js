@@ -1,43 +1,69 @@
 import React, { useState, useEffect } from 'react';
 import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import Toastify from 'toastify-js';
 
 const Chatbot = () => {
   const [questions, setQuestions] = useState([]);
   const [answer, setAnswer] = useState('');
-  const [stompClient, setStompClient] = useState(null);
+  const [socket, setSocket] = useState(null);
+  const [isConnected, setIsConnected] = useState(false); // 웹소켓 연결 상태 추가
 
   useEffect(() => {
-    const socket = new SockJS('http://localhost:8080/ws/chatbot');
-    const client = Stomp.over(socket);
+    const ws = new SockJS("/ws/chatbot/{userId}/{roomId}/websocket");
 
-    client.connect({}, () => {
+    ws.onopen = () => {
       console.log('Connected to WebSocket');
-      setStompClient(client);
+      setIsConnected(true); // 연결 성공 시 상태 변경
+    };
 
-      client.subscribe('/topic/questions', (message) => {
-        const questions = JSON.parse(message.body);
-        setQuestions(questions);
-      });
-    });
-
-    return () => {
-      if (stompClient) {
-        stompClient.disconnect();
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (Array.isArray(data)) {
+        setQuestions(data);
+      } else {
+        setAnswer(data.chatbotAnswer);
+        Toastify({
+          text: data.chatbotAnswer,
+          duration: 3000,
+          newWindow: true,
+          close: true,
+          gravity: "top",
+          position: "center",
+          stopOnFocus: true,
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)"
+          },
+          onClick: function () { }
+        }).showToast();
       }
     };
-  }, [stompClient]);
+
+    ws.onclose = () => {
+      console.log('Disconnected from WebSocket');
+      setIsConnected(false); // 연결 종료 시 상태 변경
+    };
+
+    setSocket(ws);
+
+    return () => {
+      if (socket) {
+        socket.close();
+      }
+    };
+  }, []);
 
   const handleQuestionClick = (questionNo) => {
-    stompClient.send('/app/question', {}, JSON.stringify({ questionNo }));
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(questionNo);
+    }
   };
 
   return (
     <div>
       <h1>챗봇 예제</h1>
-      <button className="btn-connect">연결</button>
-      <button className="btn-disconnect">종료</button>
       <hr />
+      {/* 웹소켓 연결 상태를 출력 */}
+      {isConnected ? <p>웹소켓 연결 성공</p> : <p>웹소켓 연결 실패</p>}
       <div className="question-wrapper">
         {questions.map((question) => (
           <button

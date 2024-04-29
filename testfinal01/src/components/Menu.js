@@ -41,6 +41,7 @@ function Menu() {
                                 <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">State예제</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/chatbot">챗봇</NavLink>
+                                    <NavLink className="dropdown-item" to="/memberChat">채팅</NavLink>
                                 </div>
                             </li>
                            
