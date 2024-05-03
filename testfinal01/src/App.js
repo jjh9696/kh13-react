@@ -14,6 +14,7 @@ const Home = lazy(() => import("./components/Home"));
 const Menu = lazy(() => import("./components/Menu"));
 
 const Chatbot = lazy(() => import("./components/integrated/chatbot"));
+const ChatbotEdit = lazy(() => import("./components/integrated/chatbotEdit"));
 const MemberChat = lazy(() => import("./components/integrated/memberChat"));
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<RealLogin />} />
                 <Route path="/chatbot" element={<Chatbot />} />
+                <Route path="/chatbotEdit" element={<ChatbotEdit />} />
                 <Route path="/memberChat" element={<MemberChat />} />
               </Routes>
             </Suspense>
