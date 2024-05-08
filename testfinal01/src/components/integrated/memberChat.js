@@ -10,6 +10,26 @@ const MemberChat = () => {
   const [roomId, setRoomId] = useState(''); // 방 ID 상태 추가
   const [userId, setUserId] = useState(''); // 현재 사용자의 ID
 
+
+
+  // 사용자 토큰에서 사용자 ID를 추출하는 함수
+  const decodeTokenAndGetUserId = (token) => {
+    try {
+      const tokenParts = token.split(".");
+      const payload = JSON.parse(atob(tokenParts[1]));
+      const userId = payload.sub; // 사용자 ID 추출
+      return userId;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
+  };
+
+  // 사용자의 고유한 식별자를 기반으로 방 ID를 동적으로 생성하는 함수
+  const generateRoomId = (userId) => {
+    return "room_" + userId; // 사용자 ID를 기반으로 한 동적 방 ID 생성
+  };
+
   useEffect(() => {
     // 사용자 ID 설정
     const token = localStorage.getItem('token');
@@ -20,6 +40,7 @@ const MemberChat = () => {
     // 방 ID 설정
     const roomIdForUser = generateRoomId(userId); // 사용자 ID를 기반으로 방 ID 생성하는 함수
     setRoomId(roomIdForUser);
+
 
     // 페이지에 들어갈 때 웹소켓 연결 생성
     const newSocket = new SockJS("http://localhost:8080/ws/memberChat");
