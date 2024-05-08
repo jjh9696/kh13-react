@@ -65,13 +65,15 @@ const MemberChat = () => {
       <hr />
       <div className="chat-wrapper">
         {messages.map((message) => (
-          <div key={message.messageNo}>
-            {message.messageSender}({message.messageSenderLevel})<br />
-            {message.messageContent}<br />
-            {moment(message.messageTime).format("a h:mm")}
+          <div key={message.message_no}>
+            {message.message_sender}({message.message_sender_level})<br />
+            {message.message_content}<br />
+            {moment(message.message_time).format("a h:mm")}
+            {/* {message.message_time} */}
           </div>
         ))}
       </div>
+      
     </div>
   );
 };
