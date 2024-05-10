@@ -15,6 +15,7 @@ const MemberChat = () => {
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const [selectedMemberId, setSelectedMemberId] = useState(''); // 초기에 빈 문자열로 설정
   const [memberList, setMemberList] = useState([]);
+  const [filteredMembers, setFilteredMembers] = useState([]); // 검색된 회원 목록
 
   useEffect(() => {
     // 페이지에 들어갈 때 웹소켓 연결 생성
@@ -26,12 +27,11 @@ const MemberChat = () => {
 
       if (Array.isArray(data)) {//목록
         setMemberList(data);
+        setFilteredMembers(data);
       }
       else {//메세지
-        // setMessages(prev=>[...prev, data]);
         setMessages((prevMessages) => [data, ...prevMessages]);
       }
-
     };
 
     setSocket(newSocket);
@@ -70,6 +70,13 @@ const MemberChat = () => {
     setSelectedMemberId(e.target.value);
   };
 
+  // 검색어로 회원 필터링하는 함수
+  const handleSearchMember = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const filtered = memberList.filter(member => member.memberId.toLowerCase().includes(searchTerm));
+    setFilteredMembers(filtered);
+  };
+
   return (
     <div>
       <h1>문의 채팅</h1>
@@ -77,9 +84,15 @@ const MemberChat = () => {
         {/* 관리자인 경우에만 회원 선택 UI를 표시 */}
         {loginLevel === '관리자' && (
           <div className="member-list">
+            <input
+              type="text"
+              className="search-input"
+              placeholder="회원 검색"
+              onChange={handleSearchMember}
+            />
             <select value={selectedMemberId} onChange={handleSelectMember}>
               <option value="">회원을 선택하세요</option>
-              {memberList.map((member) => (
+              {filteredMembers.map((member) => (
                 <option key={member.memberId} value={member.memberId}>{member.memberId}</option>
               ))}
             </select>
