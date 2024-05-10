@@ -1,69 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import { useRecoilState } from "recoil";
 import SockJS from 'sockjs-client';
 import moment from 'moment';
 import axios from "../utils/CustomAxios";
+import { loginIdState } from '../utils/RecoilData';
+import { loginLevelState } from '../utils/RecoilData';
+import './MemberChat.css'; // CSS 파일 임포트
 
 const MemberChat = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [socket, setSocket] = useState(null);
-  const [roomId, setRoomId] = useState(''); // 방 ID 상태 추가
-  const [userId, setUserId] = useState(''); // 현재 사용자의 ID
-
-
-
-  // 사용자 토큰에서 사용자 ID를 추출하는 함수
-  const decodeTokenAndGetUserId = (token) => {
-    try {
-      const tokenParts = token.split(".");
-      const payload = JSON.parse(atob(tokenParts[1]));
-      const userId = payload.sub; // 사용자 ID 추출
-      return userId;
-    } catch (error) {
-      console.error("Error decoding token:", error);
-      return null;
-    }
-  };
-
-  // 사용자의 고유한 식별자를 기반으로 방 ID를 동적으로 생성하는 함수
-  const generateRoomId = (userId) => {
-    return "room_" + userId; // 사용자 ID를 기반으로 한 동적 방 ID 생성
-  };
+  const [loginId, setLoginId] = useRecoilState(loginIdState);
+  const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
+  const [selectedMemberId, setSelectedMemberId] = useState(''); // 초기에 빈 문자열로 설정
+  const [memberList, setMemberList] = useState([]);
 
   useEffect(() => {
-    // 사용자 ID 설정
-    const token = localStorage.getItem('token');
-    if (token) {
-      const userIdFromToken = decodeTokenAndGetUserId(token); // 토큰에서 사용자 ID 추출하는 함수
-      setUserId(userIdFromToken);
-    }
-    // 방 ID 설정
-    const roomIdForUser = generateRoomId(userId); // 사용자 ID를 기반으로 방 ID 생성하는 함수
-    setRoomId(roomIdForUser);
-
-
     // 페이지에 들어갈 때 웹소켓 연결 생성
     const newSocket = new SockJS("http://localhost:8080/ws/memberChat");
 
+    // 메세지 표시
     newSocket.onmessage = (e) => {
-      const message = JSON.parse(e.data);
-      if (message.roomId === roomId) {
-        setMessages((prevMessages) => [message, ...prevMessages]);
+      const data = JSON.parse(e.data);
+
+      if (Array.isArray(data)) {//목록
+        setMemberList(data);
       }
-    };
+      else {//메세지
+        // setMessages(prev=>[...prev, data]);
+        setMessages((prevMessages) => [data, ...prevMessages]);
+      }
 
-    newSocket.onopen = () => {
-      console.log('WebSocket connection established');
-      // 웹소켓이 열리면서 사용자가 속한 방에 들어가는 요청
-      newSocket.send(JSON.stringify({ type: 'join_room', roomId, userId }));
-    };
-
-    newSocket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
-    newSocket.onclose = () => {
-      console.log('WebSocket connection closed');
     };
 
     setSocket(newSocket);
@@ -74,7 +42,7 @@ const MemberChat = () => {
         newSocket.close();
       }
     };
-  }, [roomId, userId]); // roomId와 userId가 변경될 때마다 연결을 다시 설정
+  }, []); // 빈 배열을 전달하여 한 번만 실행되도록 함
 
   const sendMessage = () => {
     if (inputValue.trim().length === 0) return;
@@ -82,28 +50,42 @@ const MemberChat = () => {
     const data = {
       token: axios.defaults.headers.common['Authorization'],
       content: inputValue,
-      roomId: roomId, // 현재 사용자의 방 ID를 전송
-      senderId: userId, // 현재 사용자의 ID를 전송
+      receiverId: selectedMemberId // 선택된 회원의 ID도 함께 전송
     };
 
     const json = JSON.stringify(data);
     if (socket && socket.readyState === WebSocket.OPEN) {
       socket.send(json);
-      setInputValue('');
-    } else {
-      console.error('WebSocket connection is not open');
     }
+
+    setInputValue('');
   };
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
+  // 회원 선택하는 함수
+  const handleSelectMember = (e) => {
+    setSelectedMemberId(e.target.value);
+  };
+
   return (
     <div>
       <h1>문의 채팅</h1>
       <div>
-        <p>현재 방의 ID: {roomId}</p> {/* 여기서 현재 방의 ID를 확인합니다 */}
+        {/* 관리자인 경우에만 회원 선택 UI를 표시 */}
+        {loginLevel === '관리자' && (
+          <div className="member-list">
+            <select value={selectedMemberId} onChange={handleSelectMember}>
+              <option value="">회원을 선택하세요</option>
+              {memberList.map((member) => (
+                <option key={member.memberId} value={member.memberId}>{member.memberId}</option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <input
           type="text"
           className="text-input"
@@ -115,13 +97,30 @@ const MemberChat = () => {
       </div>
       <hr />
       <div className="chat-wrapper">
-        {messages.map((message) => (
-          <div key={message.message_no}>
-            {message.senderId === userId ? '보낸 메시지' : '받은 메시지'}<br />
-            {message.message_content}<br />
-            {moment(message.message_time).format("a h:mm")}
-          </div>
-        ))}
+        {messages.map((message, index) => {
+          // 관리자인 경우에는 선택된 회원과의 채팅만 보여줌
+          if (loginLevel === "관리자" && selectedMemberId && (message.message_sender === selectedMemberId || message.message_receiver === selectedMemberId)) {
+            return (
+              <div key={index} className={message.message_sender === loginId ? 'message sent' : 'message received'}>
+                <div className="sender">{message.message_sender}</div>
+                <div className="content">{message.message_content}</div>
+                <div className="time">{moment(message.message_time).format("YY/MM/DD HH:mm")}</div>
+              </div>
+            );
+          }
+          // 일반 사용자인 경우에는 자신과 관련된 채팅만 보여줌
+          // 관리자가 보낸 채팅은 상담사가 보냈다고 표시
+          else if (loginLevel !== "관리자" && (message.message_sender === loginId || message.message_receiver === loginId)) {
+            return (
+              <div key={index} className={message.message_sender === loginId ? 'message sent' : 'message received'}>
+                <div className="sender">{message.message_sender === loginId ? loginId : '상담사'}</div>
+                <div className="content">{message.message_content}</div>
+                <div className="time">{moment(message.message_time).format("YY/MM/DD HH:mm")}</div>
+              </div>
+            );
+          }
+          return null;
+        })}
       </div>
     </div>
   );
